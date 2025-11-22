@@ -41,7 +41,7 @@ export default function CadastroPage() {
 
       alert("Conta criada com sucesso!");
 
-      router.push("/home");
+      router.push("/account");
     } catch (error: any) {
       alert("Erro: " + error.message);
     } finally {

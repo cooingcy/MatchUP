@@ -59,7 +59,10 @@ export default function Home() {
                   onClick={async () => {
                     const res = await loginWithGoogle();
                     if (res.ok) {
-                      window.location.href = "/home";
+                      const dados = encodeURIComponent(
+                        JSON.stringify(res.user)
+                      );
+                      window.location.href = `/home?user=${dados}`;
                     } else {
                       alert("Erro ao autenticar!");
                     }
@@ -112,7 +115,7 @@ export default function Home() {
                   onClick={async () => {
                     const res = await loginWithGoogle();
                     if (res.ok) {
-                      window.location.href = "/home";
+                      window.location.href = "/account";
                     } else {
                       alert("Erro ao autenticar!");
                     }
