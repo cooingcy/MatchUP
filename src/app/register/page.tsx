@@ -52,7 +52,6 @@ export default function CadastroPage() {
   return (
     <div className="bg-black/70 min-h-screen flex items-center justify-center p-4">
       <div className="bg-gray-900 shadow-xl rounded-xl p-8 w-full max-w-md">
-        {/* BOTÃO DE VOLTAR DENTRO DO CARD */}
         <button
           onClick={() => router.back()}
           className="text-pink-500 hover:text-pink-400 w-6 h-6 mb-4"

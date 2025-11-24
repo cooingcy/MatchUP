@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-[#0b0b0d] text-white relative">
       <nav className="w-full h-16 bg-[#111113] shadow flex items-center justify-between px-8 border-b border-white/10">
-        <h1 className="text-2xl font-bold text-pink-500">LOGO</h1>
+        <h1 className="text-2xl font-bold text-pink-500">MatchUP</h1>
 
         <button
           onClick={() => setModal("login")}
