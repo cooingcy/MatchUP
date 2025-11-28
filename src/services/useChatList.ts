@@ -1,34 +1,68 @@
 import { useEffect, useState } from "react";
 import { auth, db } from "@/config/firebase";
-import { collection, getDocs, doc, getDoc } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  doc,
+  getDoc,
+  query,
+  where,
+} from "firebase/firestore";
 
 export function useChatList() {
   const [chats, setChats] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function load() {
       const uid = auth.currentUser?.uid;
-      if (!uid) return;
-
-      const myLikesSnap = await getDocs(collection(db, "users", uid, "likes"));
-      const matches: any[] = [];
-
-      for (const d of myLikesSnap.docs) {
-        const otherId = d.id;
-        const backLike = await getDoc(doc(db, "users", otherId, "likes", uid));
-        if (!backLike.exists()) continue;
-
-        const otherUserSnap = await getDoc(doc(db, "users", otherId));
-        if (!otherUserSnap.exists()) continue;
-
-        matches.push({ matchId: otherId, usuario: otherUserSnap.data() });
+      if (!uid) {
+        setLoading(false);
+        return;
       }
 
-      setChats(matches);
+      try {
+        const matchesSnap = await getDocs(collection(db, "matches"));
+        const matchesList: any[] = [];
+
+        for (const matchDoc of matchesSnap.docs) {
+          const matchData = matchDoc.data();
+
+          if (!matchData.users?.includes(uid)) continue;
+
+          const otherUserId = matchData.users.find((id: string) => id !== uid);
+          if (!otherUserId) continue;
+
+          const otherUserSnap = await getDoc(doc(db, "users", otherUserId));
+          if (!otherUserSnap.exists()) continue;
+
+          matchesList.push({
+            matchId: matchDoc.id,
+            usuario: otherUserSnap.data(),
+            lastMessage: matchData.lastMessage,
+            timestamp: matchData.timestamp,
+            lastUpdated: matchData.lastUpdated,
+          });
+        }
+
+        matchesList.sort((a, b) => {
+          const timeA =
+            a.lastUpdated?.toDate?.() || a.lastUpdated || a.timestamp;
+          const timeB =
+            b.lastUpdated?.toDate?.() || b.lastUpdated || b.timestamp;
+          return new Date(timeB).getTime() - new Date(timeA).getTime();
+        });
+
+        setChats(matchesList);
+      } catch (error) {
+        console.error("Erro ao carregar chats:", error);
+      } finally {
+        setLoading(false);
+      }
     }
 
     load();
   }, []);
 
-  return { chats };
+  return { chats, loading };
 }

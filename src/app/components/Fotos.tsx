@@ -1,5 +1,12 @@
 "use client";
 
+import {
+  PhotoIcon,
+  TrashIcon,
+  PlusIcon,
+  CloudArrowUpIcon,
+} from "@heroicons/react/24/solid";
+
 export function Fotos({
   user,
   editando,
@@ -7,44 +14,86 @@ export function Fotos({
   enviarImagens,
   removerFoto,
 }: any) {
+  // Função de debug para testar se o clique está funcionando
+  const handleRemoverFoto = (index: number) => {
+    console.log("🚀 CLICOU NO BOTÃO REMOVER - Índice:", index);
+    console.log("📸 Fotos atuais:", user.fotos);
+    removerFoto(index);
+  };
+
   return (
-    <div className="w-full h-60 bg-[#111113] relative flex items-center justify-center overflow-x-auto gap-3 px-3 mt-24">
-      {user.fotos.length > 0 ? (
-        <div className="flex gap-3">
-          {user.fotos.map((f: string, i: number) => (
-            <div key={i} className="relative">
-              <img
-                src={f}
-                className="w-40 h-52 rounded-xl object-cover border border-white/10 shadow"
+    <div className="w-full bg-[#1a1a1d] rounded-2xl p-6 border border-white/10 mb-6">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-lg font-bold text-white">Minhas Fotos</h2>
+        {user.fotos.length > 0 && (
+          <span className="text-sm text-gray-400">
+            {user.fotos.length} {user.fotos.length === 1 ? "foto" : "fotos"}
+          </span>
+        )}
+      </div>
+
+      <div>
+        {user.fotos.length > 0 ? (
+          <div className="flex gap-4 overflow-x-auto">
+            {user.fotos.map((f: string, i: number) => (
+              <div key={i} className="flex flex-col items-center gap-2">
+                {/* Imagem SIMPLES */}
+                <div className="relative">
+                  <img
+                    src={f}
+                    className="w-40 h-52 rounded-lg object-cover border border-gray-600"
+                    alt={`Foto ${i + 1}`}
+                  />
+
+                  {/* Número da foto */}
+                  <div className="absolute top-2 left-2 bg-black text-white text-xs px-2 py-1 rounded">
+                    {i + 1}
+                  </div>
+                </div>
+
+                {/* Botão REMOVER - SUPER SIMPLES */}
+                {editando && (
+                  <button
+                    onClick={() => handleRemoverFoto(i)}
+                    className="
+                      bg-red-500 text-white px-3 py-1 rounded text-sm
+                      hover:bg-red-600 active:bg-red-700
+                    "
+                  >
+                    Remover
+                  </button>
+                )}
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-8">
+            <PhotoIcon className="w-12 h-12 text-gray-500 mx-auto mb-2" />
+            <p className="text-gray-400">Nenhuma foto adicionada</p>
+          </div>
+        )}
+
+        {/* Botão ADICIONAR FOTOS */}
+        {editando && (
+          <div className="flex justify-center mt-4">
+            <label className="bg-blue-500 text-white px-4 py-2 rounded cursor-pointer hover:bg-blue-600">
+              {uploading ? "Enviando..." : "Adicionar Fotos"}
+              <input
+                type="file"
+                accept="image/*"
+                multiple
+                className="hidden"
+                onChange={(e) => {
+                  console.log("📁 Arquivos selecionados:", e.target.files);
+                  enviarImagens(e.target.files);
+                }}
+                disabled={uploading}
               />
-
-              {editando && (
-                <button
-                  onClick={() => removerFoto(i)}
-                  className="absolute top-2 right-2 bg-black/60 p-2 rounded-full"
-                >
-                  🗑️
-                </button>
-              )}
-            </div>
-          ))}
-        </div>
-      ) : (
-        <p className="text-gray-400 text-sm">Nenhuma imagem selecionada</p>
-      )}
-
-      {editando && (
-        <label className="absolute bottom-4 bg-pink-600 px-4 py-2 rounded-full cursor-pointer">
-          {uploading ? "Enviando..." : "Selecionar imagens"}
-          <input
-            type="file"
-            accept="image/*"
-            multiple
-            className="hidden"
-            onChange={(e) => enviarImagens(e.target.files)}
-          />
-        </label>
-      )}
+            </label>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
