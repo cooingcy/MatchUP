@@ -86,8 +86,9 @@ messages/
 - Chamada de vídeo
 - Filtros avançados
 
-## 👤 Autor
+## 👤 Autores
 Alex Expedito Silva Santos
+Matheus Curci Romano
 
 ## 📚 Licença
 MIT License
