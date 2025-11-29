@@ -1,8 +1,8 @@
 plugins {
     id("com.android.application")
     kotlin("android")
-    // Se quiser o plugin Google Services, descomente a linha abaixo (e garanta que google-services.json exista)
-    // id("com.google.gms.google-services")
+    id("com.google.gms.google-services")
+
 }
 
 android {
@@ -51,6 +51,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
     implementation("androidx.core:core-ktx:1.10.1")
     implementation("androidx.activity:activity-compose:1.9.0")
+    implementation(platform("com.google.firebase:firebase-bom:34.6.0"))
 
     // Firebase (exemplo) — só adicione se for usar Firebase e tiver google-services.json
     // implementation("com.google.firebase:firebase-auth-ktx:24.0.1")
