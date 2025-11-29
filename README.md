@@ -1,36 +1,93 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MatchUP — Conecte-se com Pessoas Próximas
 
-## Getting Started
+O **MatchUP** é um aplicativo de encontros baseado em geolocalização, desenvolvido com o objetivo de aproximar pessoas que estão realmente próximas. Inspirado no modelo de apps tradicionais de match, o MatchUP traz como diferencial o foco em conexões locais, facilitando encontros presenciais, rolês casuais e até divisão de custos entre pessoas da mesma região.
 
-First, run the development server:
+## 🚀 Funcionalidades Principais
+- Cadastro e Login (Firebase Authentication)
+- Criação e edição de perfil (foto, bio, idade, interesses)
+- Localização em tempo real e definição de raio de busca
+- Sistema de Likes
+- Match automático quando há interesse mútuo
+- Chat em tempo real (Firestore)
+- Upload de fotos (Firebase Storage)
+- Interface Web (Next.js)
+- App Mobile Android (Kotlin)
 
+## 🧱 Tecnologias Utilizadas
+### Front-end Web
+- Next.js  
+
+### Mobile
+- Kotlin (Android)  
+
+### Backend / Serviços
+- Firebase Authentication  
+- Firebase Firestore  
+- Firebase Storage  
+- Firebase Hosting  
+
+## 🏗️ Arquitetura do Projeto
+O MatchUP utiliza o conceito de **BaaS (Backend as a Service)** através do Firebase.  
+Fluxo Geral:
+1. Usuário cria conta via Firebase Auth  
+2. Dados são armazenados no Firestore  
+3. Fotos enviadas ao Firebase Storage  
+4. Aplicação filtra perfis por localização e preferências  
+5. Quando ocorre interesse mútuo, um Match é gerado  
+6. Chat é habilitado em tempo real  
+
+## 📦 Instalação e Execução
+
+### Requisitos
+- Node.js 18+
+- Android Studio
+- Firebase
+- Git
+
+### Clonar o Repositório
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/seu-usuario/matchup.git
+cd matchup
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Configurar Firebase
+1. Criar projeto
+2. Ativar Authentication, Firestore e Storage  
+3. Inserir firebaseConfig no projeto
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Rodar versão Web
+```bash
+cd web
+npm install
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Rodar versão Mobile
+Abrir no Android Studio e executar.
 
-## Learn More
+## 🗄️ Estrutura do Firestore
+```
+users/
+likes/
+matches/
+messages/
+```
 
-To learn more about Next.js, take a look at the following resources:
+## 🧪 Testes
+- Testes de autenticação
+- Match
+- Localização
+- Chat em tempo real
+- Upload de fotos
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📌 Melhorias Futuras
+- Verificação de identidade
+- Sistema premium
+- Chamada de vídeo
+- Filtros avançados
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 👤 Autor
+Alex Expedito Silva Santos
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📚 Licença
+MIT License
